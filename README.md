@@ -1,7 +1,7 @@
 Eine schöne Getränkekarte für unseren Chor-Auftritt.
 
 ## 🌐 Live Demo
-Die Getränkekarte ist live unter: [Hier klicken](https://[IHR-USERNAME].github.io/chor-getraenkekarte)
+Die Getränkekarte ist live unter: [Hier klicken](https://TJK-dev.github.io/chor-getraenkekarte)
 
 ## 📱 QR-Code
 Scanne den QR-Code auf unserem Flyer, um die Getränkekarte zu öffnen!
