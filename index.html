@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getränkekarte - Chor Auftritt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(145deg, #ffd700 0%, #ffa500 50%, #87ceeb 80%, #90ee90 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2c5530;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M10,50 Q30,20 50,50 T90,50' stroke='%23ffa500' stroke-width='2' fill='none' opacity='0.3'/%3E%3Cpath d='M0,70 Q25,40 50,70 T100,70' stroke='%23ffd700' stroke-width='3' fill='none' opacity='0.2'/%3E%3C/svg%3E") repeat-x;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+            border: 3px solid #ffa500;
+        }
+
+        .header {
+            background: linear-gradient(145deg, #ffd700 0%, #ffa500 100%);
+            color: #2c5530;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "♪";
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            font-size: 28px;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite;
+            color: #2c5530;
+        }
+
+        .header::after {
+            content: "♫";
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 24px;
+            opacity: 0.8;
+            animation: float 3s ease-in-out infinite reverse;
+            color: #2c5530;
+        }
+
+        /* Musikalische Noten Animation */
+        .header::before {
+            content: "♪ ♫ ♪";
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 20px;
+            letter-spacing: 20px;
+            animation: musicNotes 6s ease-in-out infinite;
+            color: rgba(44, 85, 48, 0.6);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        @keyframes musicNotes {
+            0%, 100% { transform: translateX(-10px); opacity: 0.6; }
+            50% { transform: translateX(10px); opacity: 0.9; }
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-top: 20px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+
+        .menu {
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .menu-title {
+            text-align: center;
+            font-size: 2.2em;
+            color: #2c5530;
+            margin-bottom: 30px;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .menu-title::after {
+            content: "";
+            display: block;
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(45deg, #ffd700, #ffa500);
+            margin: 15px auto;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .drinks-grid {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .drink-item {
+            background: linear-gradient(145deg, #ffffff 0%, #fff8dc 100%);
+            border: 2px solid #ffd700;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 165, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .drink-item::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .drink-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 165, 0, 0.3);
+            border-color: #ffa500;
+        }
+
+        .drink-item:hover::before {
+            opacity: 1;
+        }
+
+        .drink-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c5530;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .drink-size {
+            color: #556b2f;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            font-size: 1.5em;
+            color: #2c5530;
+            margin-bottom: 15px;
+            padding-left: 15px;
+            border-left: 6px solid #ffa500;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0.05) 100%);
+            padding: 15px 20px;
+            border-radius: 0 15px 15px 0;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(255, 165, 0, 0.1);
+        }
+
+        .donation-note {
+            background: linear-gradient(145deg, #87ceeb 0%, #90ee90 100%);
+            color: #2c5530;
+            text-align: center;
+            padding: 30px;
+            border-radius: 20px;
+            font-size: 1.3em;
+            margin-top: 25px;
+            box-shadow: 0 8px 20px rgba(135, 206, 235, 0.3);
+            border: 3px solid rgba(255, 215, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .donation-note::before {
+            content: "♪ ♫ ♪ ♫ ♪";
+            position: absolute;
+            top: 5px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 16px;
+            letter-spacing: 15px;
+            color: rgba(44, 85, 48, 0.4);
+            animation: musicNotes 4s ease-in-out infinite;
+        }
+
+        .donation-note strong {
+            font-size: 1.6em;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #556b2f;
+            font-style: italic;
+            font-size: 1.1em;
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .menu {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Getränkekarte</h1>
+            <p>Chor Auftritt</p>
+        </div>
+        
+        <div class="menu">
+            <h2 class="menu-title">Unsere Getränke</h2>
+            
+            <div class="category">
+                <h3 class="category-title">Erfrischungsgetränke</h3>
+                <div class="drinks-grid">
+                    <div class="drink-item">
+                        <div class="drink-name">Viva con Agua leise</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                    <div class="drink-item">
+                        <div class="drink-name">Viva con Agua laut</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                    <div class="drink-item">
+                        <div class="drink-name">Bionade Holunder</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                    <div class="drink-item">
+                        <div class="drink-name">Bionade naturtrübe Zitrone</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Bier</h3>
+                <div class="drinks-grid">
+                    <div class="drink-item">
+                        <div class="drink-name">Flensburger Alkoholfrei</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                    <div class="drink-item">
+                        <div class="drink-name">Flensburger Pilsener</div>
+                        <div class="drink-size">0,33L Flasche</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h3 class="category-title">Wein</h3>
+                <div class="drinks-grid">
+                    <div class="drink-item">
+                        <div class="drink-name">Weißwein Grauer Burgunder trocken</div>
+                        <div class="drink-size">Pfalz Ungstein</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="donation-note">
+                <strong>🎵 Gegen eine Spende Deiner Wahl 🎵</strong>
+                Jeder Betrag hilft uns zukünftige Veranstalungen zu ermöglichen!
+            </div>
+        </div>
+        
+        <div class="footer">
+            Vielen Dank für euren Besuch! 🎶
+        </div>
+    </div>
+</body>
+</html>
